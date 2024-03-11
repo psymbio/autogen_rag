@@ -1,7 +1,7 @@
 # TODO
 
 ## 2024/03/11
-1. Basic setup (env, requirements, SETUP, TODO) [DONE]
+1. Basic setup (env, requirements, SETUP, TODO, README) [DONE]
 2. Milvus DB setup (01_milvus_connection_check.py - try with milvus cli to confirm) [DONE]
 3. Vectorizer setup (tiktoken BPE tokenizer) [DONE]
 4. Document reading through llama-index [DONE]
