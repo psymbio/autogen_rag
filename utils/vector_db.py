@@ -23,7 +23,7 @@ def create_connection():
     print(connections.list_connections())
 
 def create_collection(name, id_field, vector_field, max_dim):
-    field1 = FieldSchema(name=id_field, dtype=DataType.INT64, description="int64", is_primary=True, auto_id=True)
+    field1 = FieldSchema(name=id_field, dtype=DataType.INT64, description="int64", is_primary=True)
     field2 = FieldSchema(name=vector_field, dtype=DataType.FLOAT_VECTOR, description="float vector", dim=max_dim,
                          is_primary=False)
     schema = CollectionSchema(fields=[field1, field2], description="collection description")
@@ -55,18 +55,19 @@ def create_index(collection, filed_name):
     collection.create_index(filed_name, index_param)
     print("\nCreated index:\n{}".format(collection.index().params))
 
-def search(collection, vector_field, id_field, search_vectors):
+def search(collection, vector_field, search_vectors):
     search_param = {
         "data": search_vectors,
         "anns_field": vector_field,
         "param": {"metric_type": METRIC_TYPE, "params": {"nprobe": NPROBE}},
         "limit": TOPK,
-        "expr": "id_field > 0"}
+        "expr": "id > 0"}
     results = collection.search(**search_param)
-    for i, result in enumerate(results):
-        print("\nSearch result for {}th vector: ".format(i))
-        for j, res in enumerate(result):
-            print("Top {}: {}".format(j, res))
+    # for i, result in enumerate(results):
+    #     print("\nSearch result for {}th vector: ".format(i))
+    #     for j, res in enumerate(result):
+    #         print("Top {}: {}".format(j, res))
+    return results
 
 def get_entity_num(collection):
     print("\nThe number of entity:")

@@ -15,3 +15,11 @@ enc = tiktoken.Encoding(
         "<|im_end|>": 100265,
     }
 )
+
+def pad_or_trim_encoded_vectors(vector, dim):
+    if len(vector) >= dim:
+        result = vector[:dim]
+    else:
+        result = vector
+        result.extend([100265] * (dim - len(vector)))
+    return result
