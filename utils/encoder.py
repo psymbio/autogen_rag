@@ -23,3 +23,19 @@ def pad_or_trim_encoded_vectors(vector, dim):
         result = vector
         result.extend([100265] * (dim - len(vector)))
     return result
+
+
+def trim_special_tokens(text, special_tokens=["<|im_start|>", "<|im_end|>"]):
+    """
+    Remove special tokens from the given text.
+
+    Args:
+        text (str): The input text.
+        special_tokens (list): List of special tokens to remove.
+
+    Returns:
+        str: The text with special tokens removed.
+    """
+    for token in special_tokens:
+        text = text.replace(token, '')
+    return text
