@@ -2,7 +2,7 @@ from utils import document_loader, encoder
 import numpy as np
 import faiss
 
-DIM = 20
+DIM = 50
 
 def get_chunks(s, maxlength):
     start = 0
@@ -23,12 +23,12 @@ encoded_data_to_insert = []
 documents = document_loader.load_directory("test_documents")
 for document in documents:
     text = document.text
-    chunks = get_chunks(text, 80)
+    chunks = get_chunks(text, 100)
     # chunks_list = [(n, len(n)) for n in chunks]
     # print(chunks_list)
     # print("\n\n\n")
     for chunk in chunks:
-        encoded_partition = enc.encode(chunk)
+        encoded_partition = enc.encode(chunk.lower())
         encoded_partition_padded = encoder.pad_or_trim_encoded_vectors(encoded_partition, DIM)
         encoded_data_to_insert.append(encoded_partition_padded)
         print(len(encoded_partition), len(encoded_partition_padded))
@@ -43,8 +43,8 @@ for document in documents:
     # faiss.normalize_L2(vectors)
     index.add(vectors)
 
-    search_text = ' successfully manage the final descent of inflation to target, calibrating'
-    search_encoded = enc.encode(search_text)
+    search_text = 'are toyota sales declining?'
+    search_encoded = enc.encode(search_text.lower())
     search_padded = encoder.pad_or_trim_encoded_vectors(search_encoded, DIM)
     _vector = np.array([search_padded]).astype("float32")
     # _vector /= 100265
