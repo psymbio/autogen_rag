@@ -17,6 +17,27 @@ enc = tiktoken.Encoding(
 )
 
 def pad_or_trim_encoded_vectors(vector, dim):
+    """
+    Pads or trims a given vector to match the specified dimension.
+
+    If the length of the vector is greater than or equal to the specified dimension,
+    it trims the vector to the specified dimension. If the length is less than the
+    specified dimension, it pads the vector with a predefined value (100265) until
+    it reaches the specified dimension.
+
+    Args:
+        vector (list): The input vector to be padded or trimmed.
+        dim (int): The desired dimension of the resulting vector.
+
+    Returns:
+        list: The resulting vector after padding or trimming.
+
+    Example:
+        >>> pad_or_trim_encoded_vectors([1, 2, 3], 5)
+        [1, 2, 3, 100265, 100265]
+        >>> pad_or_trim_encoded_vectors([1, 2, 3, 4, 5], 3)
+        [1, 2, 3]
+    """
     if len(vector) >= dim:
         result = vector[:dim]
     else:
